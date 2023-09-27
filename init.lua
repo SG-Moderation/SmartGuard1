@@ -1,7 +1,6 @@
-local blacklist = {"fuck", "shit", "bitch"}
-local blacklist_simple = {"fu", "sht"}
+automod = {}
 
-function remove_duplicates(s)
+local function remove_duplicates(s)
     local result = ""
     for i = 1, #s do
         if s:sub(i, i) ~= s:sub(i + 1, i + 1) then
@@ -11,41 +10,54 @@ function remove_duplicates(s)
     return result
 end
 
-minetest.register_on_chat_message(function(name, message)
+function automod.contains_pattern(target_message, blacklist)
 
-    local blacklist_check = remove_duplicates(string.lower(message))
-    --minetest.chat_send_all(blacklist_check)
+    local blacklist_check = remove_duplicates(string.lower(target_message))
 
     for _, word in ipairs(blacklist) do
         if string.find(blacklist_check, word) then
-
-            minetest.chat_send_all("No swearing please!")
-
             return true
         end
     end
-
     return false
-end)
+end
 
-minetest.register_on_chat_message(function(name, message)
+function automod.contains_word(target_message, blacklist)
 
-    local blacklist_check = remove_duplicates(string.lower(message))
-    --minetest.chat_send_all(blacklist_check)
+    local blacklist_check = remove_duplicates(string.lower(target_message))
 
     local word_table = {}
-    for word in blacklist_check:gmatch("%w+") do table.insert(word_table, word) end
+    for word in blacklist_check:gmatch("%w+") do 
+        table.insert(word_table, word) 
+    end
 
-    for _, word in ipairs(blacklist_simple) do
+    for _, word in ipairs(blacklist) do
         for _, word_table in ipairs (word_table) do
             if word == word_table then
-                
-                minetest.chat_send_all("No swearing please!")
-
                 return true
             end
         end
     end
+    return false
+end
 
+
+local blacklist_complex = {"fuck", "shit", "bitch"}
+local blacklist_simple = {"fu", "sht"}
+
+minetest.register_on_chat_message(function(name, message)
+    if automod.contains_pattern(message, blacklist_complex) then
+        minetest.chat_send_all("No swearing please!")
+        return true
+    end
+    return false
+end)
+
+
+minetest.register_on_chat_message(function(name, message)
+    if automod.contains_word(message, blacklist_simple) then
+        minetest.chat_send_all("No swearing please!")
+        return true
+    end
     return false
 end)
