@@ -10,6 +10,7 @@ local function remove_duplicates(s)
     return result
 end
 
+-- if "word" is in the blacklist, then "blahwordblah" will still trigger this
 function automod.contains_pattern(target_message, blacklist)
     local blacklist_check = remove_duplicates(string.lower(target_message))
     for _, word in ipairs(blacklist) do
@@ -20,6 +21,8 @@ function automod.contains_pattern(target_message, blacklist)
     return false
 end
 
+-- if "word" is in the blacklist, then "blah word blah" or "word" will trigger this
+-- "blahwordblah" won't
 function automod.contains_word(target_message, blacklist)
     local blacklist_check = remove_duplicates(string.lower(target_message))
     local word_table = {}
@@ -36,6 +39,7 @@ function automod.contains_word(target_message, blacklist)
     return false
 end
 
+-- messages that contain all caps and more than 5 characters will trigger this
 function automod.contains_caps(target_message)
     if target_message == string.upper(target_message)
     and string.len(target_message) > 5 then
@@ -45,6 +49,7 @@ function automod.contains_caps(target_message)
     end
 end
 
+-- messages without a space and contain 20 or more characters will trigger this
 function automod.contains_spam(target_message)
     if string.len(target_message) > 20
     and not string.find(target_message, ' ') then
