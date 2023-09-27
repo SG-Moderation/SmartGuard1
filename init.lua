@@ -48,7 +48,6 @@ minetest.register_on_chat_message(function(name, message)
     return false
 end)
 
-
 minetest.register_on_chat_message(function(name, message)
     if automod.contains_word(message, blacklist_simple) then
         minetest.chat_send_all("No swearing please!")
