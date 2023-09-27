@@ -36,6 +36,24 @@ function automod.contains_word(target_message, blacklist)
     return false
 end
 
+function automod.contains_caps(target_message)
+    if target_message == string.upper(target_message)
+    and string.len(target_message) > 5 then
+        return true
+    else
+        return false
+    end
+end
+
+function automod.contains_spam(target_message)
+    if string.len(target_message) > 20
+    and not string.find(target_message, ' ') then
+        return true
+    else
+        return false
+    end
+end
+
 
 local blacklist_complex = {"fuck", "shit", "bitch"}
 local blacklist_simple = {"fu", "sht"}
@@ -51,6 +69,22 @@ end)
 minetest.register_on_chat_message(function(name, message)
     if automod.contains_word(message, blacklist_simple) then
         minetest.chat_send_all("No swearing please!")
+        return true
+    end
+    return false
+end)
+
+minetest.register_on_chat_message(function(name, message)
+    if automod.contains_caps(message) then
+        minetest.chat_send_all("No all caps please!")
+        return true
+    end
+    return false
+end)
+
+minetest.register_on_chat_message(function(name, message)
+    if automod.contains_spam(message) then
+        minetest.chat_send_all("No spamming please!")
         return true
     end
     return false
