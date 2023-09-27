@@ -58,4 +58,3 @@ function automod.contains_spam(target_message)
         return false
     end
 end
-
