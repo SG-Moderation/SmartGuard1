@@ -1,5 +1,6 @@
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/functions.lua")
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/anti-bypass.lua")
+
 local blacklist_complex = {"fuck", "shit", "bitch"}
 local blacklist_simple = {"fu", "sht"}
 
