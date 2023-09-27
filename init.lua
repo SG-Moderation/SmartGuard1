@@ -11,9 +11,7 @@ local function remove_duplicates(s)
 end
 
 function automod.contains_pattern(target_message, blacklist)
-
     local blacklist_check = remove_duplicates(string.lower(target_message))
-
     for _, word in ipairs(blacklist) do
         if string.find(blacklist_check, word) then
             return true
@@ -23,14 +21,11 @@ function automod.contains_pattern(target_message, blacklist)
 end
 
 function automod.contains_word(target_message, blacklist)
-
     local blacklist_check = remove_duplicates(string.lower(target_message))
-
     local word_table = {}
     for word in blacklist_check:gmatch("%w+") do 
         table.insert(word_table, word) 
     end
-
     for _, word in ipairs(blacklist) do
         for _, word_table in ipairs (word_table) do
             if word == word_table then
