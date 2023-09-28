@@ -1,20 +1,25 @@
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/functions.lua")
-dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/anti-bypass.lua")
 
-local blacklist_complex = {"fuck", "shit", "bitch"}
+local blacklist_smart = {"fuck", "shit", "bitch", "fu ", "f u ", "f u c k", "s h i t", "hello", "h e l l o"}
 local blacklist_simple = {"fu", "sht"}
 
 minetest.register_on_chat_message(function(name, message)
-    if automod.contains_pattern(message, blacklist_complex) then
+    if automod.smartfilter(message, name, blacklist_smart) then
         minetest.chat_send_all("Swearing detected.")
     end
 end)
 
-minetest.register_on_chat_message(function(name, message)
-    if automod.contains_word(message, blacklist_simple) then
-        minetest.chat_send_all("Swearing detected.")
-    end
-end)
+--minetest.register_on_chat_message(function(name, message)
+    --if automod.contains_pattern(message, blacklist_smart) then
+        --minetest.chat_send_all("Swearing detected.")
+    --end
+--end)
+
+--minetest.register_on_chat_message(function(name, message)
+    --if automod.contains_word(message, blacklist_simple) then
+        --minetest.chat_send_all("Swearing detected.")
+    --end
+--end)
 
 minetest.register_on_chat_message(function(name, message)
     if automod.contains_caps(message) then

@@ -1,5 +1,7 @@
 automod = {}
 
+local last_messages = {}
+
 local function remove_duplicates(s)
     local result = ""
     for i = 1, #s do
@@ -8,6 +10,48 @@ local function remove_duplicates(s)
         end
     end
     return result
+end
+
+-- smart filter, experimental
+function automod.smartfilter(message, name, blacklist)
+
+    if not last_messages[name] then
+        last_messages[name] = {}
+    end
+
+    table.insert(last_messages[name], message .. " ")
+
+    if #last_messages[name] > 20 then
+        table.remove(last_messages[name], 1)
+    end
+
+    local last_messages_str = table.concat(last_messages[name])
+    for _, word in ipairs(blacklist) do
+        if string.find(last_messages_str, word) then
+            last_messages[name] = {}
+            return true
+        end
+    end
+end
+
+-- messages that contain all caps and more than 5 characters will trigger this
+function automod.contains_caps(target_message)
+    if target_message == string.upper(target_message)
+    and string.len(target_message) > 5 then
+        return true
+    else
+        return false
+    end
+end
+
+-- messages without a space and contain 15 or more characters will trigger this
+function automod.contains_spam(target_message)
+    if string.len(target_message) > 15
+    and not string.find(target_message, ' ') then
+        return true
+    else
+        return false
+    end
 end
 
 -- if "word" is in the blacklist, then "blahwordblah" will still trigger this
@@ -37,24 +81,4 @@ function automod.contains_word(target_message, blacklist)
         end
     end
     return false
-end
-
--- messages that contain all caps and more than 5 characters will trigger this
-function automod.contains_caps(target_message)
-    if target_message == string.upper(target_message)
-    and string.len(target_message) > 5 then
-        return true
-    else
-        return false
-    end
-end
-
--- messages without a space and contain 15 or more characters will trigger this
-function automod.contains_spam(target_message)
-    if string.len(target_message) > 15
-    and not string.find(target_message, ' ') then
-        return true
-    else
-        return false
-    end
 end
