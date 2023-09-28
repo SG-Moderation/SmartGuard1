@@ -1,5 +1,5 @@
 local last_messages = {}
-local blacklist_bypass = {"fuck", "fu", "shit", "fck", "sht", "hello"}
+local blacklist_bypass = {"fuck", "fu", "shit", "fck", "sht"}
 
 minetest.register_on_chat_message(function(name, message)
 
