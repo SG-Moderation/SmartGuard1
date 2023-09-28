@@ -23,8 +23,8 @@ local function lowercase_table(tbl)
     return tbl
 end
 
--- smart filter, experimental
-function automod.smartfilter(message, name, blacklist)
+-- smartcontains, experimental
+function automod.smartcontains_word(message, name, blacklist)
 
     if not last_messages[name] then
         last_messages[name] = {}
