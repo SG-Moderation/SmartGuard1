@@ -1,5 +1,5 @@
 local last_messages = {}
-local blacklist_bypass = {"fuck", "shit", "fck"}
+local blacklist_bypass = {"fuck", "shit", "fu ", "f u "}
 
 minetest.register_on_chat_message(function(name, message)
 
@@ -7,7 +7,7 @@ minetest.register_on_chat_message(function(name, message)
         last_messages[name] = {}
     end
 
-    table.insert(last_messages[name], message)
+    table.insert(last_messages[name], message .. " ")
 
     if #last_messages[name] > 20 then
         table.remove(last_messages[name], 1)
