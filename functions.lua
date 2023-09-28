@@ -12,6 +12,17 @@ local function remove_duplicates(s)
     return result
 end
 
+local function lowercase_table(tbl)
+    for i, v in pairs(tbl) do
+        if type(v) == 'string' then
+            tbl[i] = v:lower()
+        elseif type(v) == 'table' then
+            tbl[i] = lowercase_table(v)
+        end
+    end
+    return tbl
+end
+
 -- smart filter, experimental
 function automod.smartfilter(message, name, blacklist)
 
@@ -20,6 +31,7 @@ function automod.smartfilter(message, name, blacklist)
     end
 
     table.insert(last_messages[name], message .. " ")
+    last_messages[name] = lowercase_table(last_messages[name])
 
     if #last_messages[name] > 20 then
         table.remove(last_messages[name], 1)
