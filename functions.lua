@@ -58,7 +58,7 @@ end
 
 -- messages without a space and contain 15 or more characters will trigger this
 function automod.contains_spam(target_message)
-    if string.len(target_message) > 15
+    if string.len(target_message) > 20
     and not string.find(target_message, ' ') then
         return true
     else
