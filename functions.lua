@@ -30,7 +30,7 @@ function automod.smartfilter(message, name, blacklist)
         last_messages[name] = {}
     end
 
-    table.insert(last_messages[name], message .. " ")
+    table.insert(last_messages[name], remove_duplicates(message) .. " ")
     last_messages[name] = lowercase_table(last_messages[name])
 
     if #last_messages[name] > 20 then
