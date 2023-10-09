@@ -4,7 +4,7 @@ local blacklist_smart = {"fuck", "shit", "bitch", "fu ", "f u ", "f u c k", "s h
 local blacklist_simple = {"fu", "sht"}
 
 minetest.register_on_chat_message(function(name, message)
-    if automod.smartcontains_word(message, name, blacklist_smart) then
+    if automod.smartcontains(message, name, blacklist_smart) then
         minetest.chat_send_all("Swearing detected.")
     end
 end)

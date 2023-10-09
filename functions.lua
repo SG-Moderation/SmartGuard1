@@ -23,8 +23,33 @@ local function lowercase_table(tbl)
     return tbl
 end
 
--- smartcontains, experimental
-function automod.smartcontains_word(message, name, blacklist)
+--messages by players will be logged into a table, with a table for each player.
+--A SPACE **WON"T** BE ADDED AT THE END OF EACH MESSAGE.
+function automod.smartcontains(message, name, blacklist)
+
+    if not last_messages[name] then
+        last_messages[name] = {}
+    end
+
+    table.insert(last_messages[name], remove_duplicates(message))
+    last_messages[name] = lowercase_table(last_messages[name])
+
+    if #last_messages[name] > 20 then
+        table.remove(last_messages[name], 1)
+    end
+
+    local last_messages_str = table.concat(last_messages[name])
+    for _, word in ipairs(blacklist) do
+        if string.find(last_messages_str, word) then
+            last_messages[name] = {}
+            return true
+        end
+    end
+end
+
+--messages by players will be logged into a table, with a table for each player.
+--A SPACE **WILL** BE ADDED AT THE END OF EACH MESSAGE.
+function automod.smartcontains2(message, name, blacklist)
 
     if not last_messages[name] then
         last_messages[name] = {}
