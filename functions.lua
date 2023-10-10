@@ -71,6 +71,15 @@ function automod.smartcontains2(message, name, blacklist)
     end
 end
 
+-- this censors the given message using the given blacklist
+function automod.censor(message, blacklist)
+    message = remove_duplicates(message)
+    for _, word in ipairs(blacklist) do
+        message = message:gsub(word, "*****")
+    end
+    return message
+end
+
 -- messages that contain all caps and more than 5 characters will trigger this
 function automod.contains_caps(target_message)
     if target_message == string.upper(target_message)
