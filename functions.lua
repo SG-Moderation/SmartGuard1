@@ -73,7 +73,15 @@ end
 
 -- this censors the given message using the given blacklist
 function automod.censor(message, blacklist)
-    message = remove_duplicates(message)
+    message = string.lower(remove_duplicates(message))
+    for _, word in ipairs(blacklist) do
+        message = message:gsub(word, "*****")
+    end
+    return message
+end
+
+function automod.censor2(message, blacklist)
+    message = string.lower(remove_duplicates(message .. " "))
     for _, word in ipairs(blacklist) do
         message = message:gsub(word, "*****")
     end

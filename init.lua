@@ -7,15 +7,15 @@ dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/functions.lua")
     and you want to match them literally, you’ll need to escape them using the % character.
 ]]
 
-local blacklist_smart = {"fuck", "shit", "bitch"}
-local blacklist_simple = {"fu ", "shi ", "f u "}
+local blacklist1 = {"fuck", "shit", "bitch"}
+local blacklist2 = {"fu ", "shi ", "f u "}
 
 
 minetest.register_on_chat_message(function(name, message)
-    if automod.smartcontains(message, name, blacklist_smart) then
+    if automod.smartcontains(message, name, blacklist1) then
         minetest.chat_send_all("Swearing detected.")
 
-        local censored_message = automod.censor(message, blacklist_smart)
+        local censored_message = automod.censor(message, blacklist1)
         minetest.chat_send_all("<" .. name .. "> " .. censored_message)
         return true
     end
