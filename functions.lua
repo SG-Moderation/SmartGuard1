@@ -92,7 +92,7 @@ function automod.contains_spam(target_message)
 end
 
 -- if "word" is in the blacklist, then "blahwordblah" will still trigger this
-function automod.contains_pattern(target_message, blacklist)
+function automod.contains_word(target_message, blacklist)
     local blacklist_check = remove_duplicates(string.lower(target_message))
     for _, word in ipairs(blacklist) do
         if string.find(blacklist_check, word) then
@@ -104,7 +104,7 @@ end
 
 -- if "word" is in the blacklist, then "blah word blah" or "word" will trigger this
 -- "blahwordblah" won't
-function automod.contains_word(target_message, blacklist)
+function automod.contains_word2(target_message, blacklist)
     local blacklist_check = remove_duplicates(string.lower(target_message))
     local word_table = {}
     for word in blacklist_check:gmatch("%w+") do 

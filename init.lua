@@ -9,18 +9,6 @@ minetest.register_on_chat_message(function(name, message)
     end
 end)
 
---minetest.register_on_chat_message(function(name, message)
-    --if automod.contains_pattern(message, blacklist_smart) then
-        --minetest.chat_send_all("Swearing detected.")
-    --end
---end)
-
---minetest.register_on_chat_message(function(name, message)
-    --if automod.contains_word(message, blacklist_simple) then
-        --minetest.chat_send_all("Swearing detected.")
-    --end
---end)
-
 minetest.register_on_chat_message(function(name, message)
     if automod.contains_caps(message) then
         minetest.chat_send_all("All-caps detected.")
@@ -32,3 +20,15 @@ minetest.register_on_chat_message(function(name, message)
         minetest.chat_send_all("Spamming detected.")
     end
 end)
+
+--minetest.register_on_chat_message(function(name, message)
+    --if automod.contains_pattern(message, blacklist_smart) then
+        --minetest.chat_send_all("Swearing detected.")
+    --end
+--end)
+
+--minetest.register_on_chat_message(function(name, message)
+    --if automod.contains_word(message, blacklist_simple) then
+        --minetest.chat_send_all("Swearing detected.")
+    --end
+--end)
