@@ -21,7 +21,7 @@ local blacklist2 = {"fu ", "shi ", "f u "}
 
 minetest.register_on_chat_message(function(name, message)
     if automod.smartcontains1(message, name, blacklist1) then
-        file = io.open(minetest.get_worldpath("mt_automod") .. "/AUTOMOD_LOGS.txt", "a")
+        file = io.open(minetest.get_worldpath("smartguard") .. "/AUTOMOD_LOGS.txt", "a")
         file:write(gettime() .. "   ", "Player " .. name .. " said " .. message .. "\n")
         file:close()
 
@@ -30,8 +30,9 @@ end)
 
 minetest.register_on_chat_message(function(name, message)
     if automod.smartcontains2(message, name, blacklist2) then
-        minetest.chat_send_all("Swearing detected.")
-
+        file = io.open(minetest.get_worldpath("smartguard") .. "/AUTOMOD_LOGS.txt", "a")
+        file:write(gettime() .. "   ", "Player " .. name .. " said " .. message .. "\n")
+        file:close()
     end
 end)
 
