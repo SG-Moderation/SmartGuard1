@@ -15,8 +15,19 @@ end
     and you want to match them literally, you’ll need to escape them using the % character.
 ]]
 
-local blacklist1 = {"fuck", "shit", "bitch"}
-local blacklist2 = {"fu ", "shi ", "f u "}
+local blacklist1 = {}
+local blfile = io.open(minetest.get_modpath(minetest.get_current_modname()) .. "/BLACKLIST1.txt")
+for line in blfile:lines() do
+    table.insert(blacklist1, line)
+end
+blfile:close()
+
+local blacklist2 = {}
+local blfile2 = io.open(minetest.get_modpath(minetest.get_current_modname()) .. "/BLACKLIST2.txt")
+for line in blfile2:lines() do
+    table.insert(blacklist1, line)
+end
+blfile2:close()
 
 
 minetest.register_on_chat_message(function(name, message)
