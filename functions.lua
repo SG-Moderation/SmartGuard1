@@ -13,16 +13,6 @@ local function remove_duplicates(s)
     return result
 end
 
-local function lowercase_table(tbl)
-    for i, v in pairs(tbl) do
-        if type(v) == 'string' then
-            tbl[i] = v:lower()
-        elseif type(v) == 'table' then
-            tbl[i] = lowercase_table(v)
-        end
-    end
-    return tbl
-end
 
 --messages by players will be logged into a table, with a table for each player.
 --A SPACE **WON"T** BE ADDED AT THE END OF EACH MESSAGE.
@@ -32,8 +22,7 @@ function automod.smartcontains1(message, name, blacklist)
         last_messages1[name] = {}
     end
 
-    table.insert(last_messages1[name], remove_duplicates(message))
-    last_messages1[name] = lowercase_table(last_messages1[name])
+    table.insert(last_messages1[name], remove_duplicates(string.lower(message)))
 
     if #last_messages1[name] > 20 then
         table.remove(last_messages1[name], 1)
@@ -56,8 +45,7 @@ function automod.smartcontains2(message, name, blacklist)
         last_messages2[name] = {}
     end
 
-    table.insert(last_messages2[name], remove_duplicates(message) .. " ")
-    last_messages2[name] = lowercase_table(last_messages2[name])
+    table.insert(last_messages1[name], remove_duplicates(string.lower(message)) .. " ")
 
     if #last_messages2[name] > 20 then
         table.remove(last_messages2[name], 1)
