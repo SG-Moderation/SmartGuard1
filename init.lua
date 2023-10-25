@@ -13,7 +13,9 @@ local blacklist2 = {"fu ", "shi ", "f u "}
 
 minetest.register_on_chat_message(function(name, message)
     if automod.smartcontains1(message, name, blacklist1) then
-        minetest.chat_send_all("Swearing detected.")
+        file = io.open(minetest.get_worldpath("mt_automod") .. "/AUTOMOD_LOGS.txt", "a")
+        file:write("Player " .. name .. " said " .. message .. "\n")
+        file:close()
 
         local censored_message = automod.censor(message, blacklist1)
         minetest.chat_send_all("<" .. name .. "> " .. censored_message)
@@ -31,17 +33,17 @@ minetest.register_on_chat_message(function(name, message)
     end
 end)
 
-minetest.register_on_chat_message(function(name, message)
-    if automod.contains_caps(message) then
-        minetest.chat_send_all("All-caps detected.")
-    end
-end)
+--minetest.register_on_chat_message(function(name, message)
+    --if automod.contains_caps(message) then
+        --minetest.chat_send_all("All-caps detected.")
+    --end
+--end)
 
-minetest.register_on_chat_message(function(name, message)
-    if automod.contains_spam(message) then
-        minetest.chat_send_all("Spamming detected.")
-    end
-end)
+--minetest.register_on_chat_message(function(name, message)
+    --if automod.contains_spam(message) then
+        --minetest.chat_send_all("Spamming detected.")
+    --end
+--end)
 
 --minetest.register_on_chat_message(function(name, message)
     --if automod.contains_pattern(message, blacklist_smart) then

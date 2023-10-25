@@ -90,24 +90,24 @@ function automod.censor2(message, blacklist)
 end
 
 -- messages that contain all caps and more than 5 characters will trigger this
-function automod.contains_caps(target_message)
-    if target_message == string.upper(target_message)
-    and string.len(target_message) > 5 then
-        return true
-    else
-        return false
-    end
-end
+--function automod.contains_caps(target_message)
+    --if target_message == string.upper(target_message)
+    --and string.len(target_message) > 5 then
+        --return true
+    --else
+        --return false
+    --end
+--end
 
 -- messages without a space and contain 15 or more characters will trigger this
-function automod.contains_spam(target_message)
-    if string.len(target_message) > 20
-    and not string.find(target_message, ' ') then
-        return true
-    else
-        return false
-    end
-end
+--function automod.contains_spam(target_message)
+    --if string.len(target_message) > 20
+    --and not string.find(target_message, ' ') then
+        --return true
+    --else
+        --return false
+    --end
+--end
 
 -- if "word" is in the blacklist, then "blahwordblah" will still trigger this
 function automod.contains_word(target_message, blacklist)
