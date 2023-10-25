@@ -32,8 +32,8 @@ function automod.smartcontains1(message, name, blacklist)
         last_messages1[name] = {}
     end
 
-    table.insert(last_messages1[name], remove_duplicates(message))
     last_messages1[name] = lowercase_table(last_messages1[name])
+    table.insert(last_messages1[name], remove_duplicates(message))
 
     if #last_messages1[name] > 20 then
         table.remove(last_messages1[name], 1)
@@ -56,8 +56,8 @@ function automod.smartcontains2(message, name, blacklist)
         last_messages2[name] = {}
     end
 
-    table.insert(last_messages2[name], remove_duplicates(message) .. " ")
     last_messages2[name] = lowercase_table(last_messages2[name])
+    table.insert(last_messages2[name], remove_duplicates(message) .. " ")
 
     if #last_messages2[name] > 20 then
         table.remove(last_messages2[name], 1)
