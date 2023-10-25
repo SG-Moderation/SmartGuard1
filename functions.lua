@@ -1,6 +1,7 @@
 automod = {}
 
-local last_messages = {}
+local last_messages1 = {}
+local last_messages2 = {}
 
 local function remove_duplicates(s)
     local result = ""
@@ -25,23 +26,23 @@ end
 
 --messages by players will be logged into a table, with a table for each player.
 --A SPACE **WON"T** BE ADDED AT THE END OF EACH MESSAGE.
-function automod.smartcontains(message, name, blacklist)
+function automod.smartcontains1(message, name, blacklist)
 
-    if not last_messages[name] then
-        last_messages[name] = {}
+    if not last_messages1[name] then
+        last_messages1[name] = {}
     end
 
-    table.insert(last_messages[name], remove_duplicates(message))
-    last_messages[name] = lowercase_table(last_messages[name])
+    table.insert(last_messages1[name], remove_duplicates(message))
+    last_messages1[name] = lowercase_table(last_messages1[name])
 
-    if #last_messages[name] > 20 then
-        table.remove(last_messages[name], 1)
+    if #last_messages1[name] > 20 then
+        table.remove(last_messages1[name], 1)
     end
 
-    local last_messages_str = table.concat(last_messages[name])
+    local last_messages_str1 = table.concat(last_messages1[name])
     for _, word in ipairs(blacklist) do
-        if string.find(last_messages_str, word) then
-            last_messages[name] = {}
+        if string.find(last_messages_str1, word) then
+            last_messages1[name] = {}
             return true
         end
     end
@@ -51,21 +52,21 @@ end
 --A SPACE **WILL** BE ADDED AT THE END OF EACH MESSAGE.
 function automod.smartcontains2(message, name, blacklist)
 
-    if not last_messages[name] then
-        last_messages[name] = {}
+    if not last_messages2[name] then
+        last_messages2[name] = {}
     end
 
-    table.insert(last_messages[name], remove_duplicates(message) .. " ")
-    last_messages[name] = lowercase_table(last_messages[name])
+    table.insert(last_messages2[name], remove_duplicates(message) .. " ")
+    last_messages2[name] = lowercase_table(last_messages2[name])
 
-    if #last_messages[name] > 20 then
-        table.remove(last_messages[name], 1)
+    if #last_messages2[name] > 20 then
+        table.remove(last_messages2[name], 1)
     end
 
-    local last_messages_str = table.concat(last_messages[name])
+    local last_messages_str2 = table.concat(last_messages2[name])
     for _, word in ipairs(blacklist) do
-        if string.find(last_messages_str, word) then
-            last_messages[name] = {}
+        if string.find(last_messages_str2, word) then
+            last_messages2[name] = {}
             return true
         end
     end

@@ -12,7 +12,17 @@ local blacklist2 = {"fu ", "shi ", "f u "}
 
 
 minetest.register_on_chat_message(function(name, message)
-    if automod.smartcontains(message, name, blacklist1) then
+    if automod.smartcontains1(message, name, blacklist1) then
+        minetest.chat_send_all("Swearing detected.")
+
+        local censored_message = automod.censor(message, blacklist1)
+        minetest.chat_send_all("<" .. name .. "> " .. censored_message)
+        return true
+    end
+end)
+
+minetest.register_on_chat_message(function(name, message)
+    if automod.smartcontains2(message, name, blacklist2) then
         minetest.chat_send_all("Swearing detected.")
 
         local censored_message = automod.censor(message, blacklist1)
