@@ -45,7 +45,7 @@ function automod.smartcontains2(message, name, blacklist)
         last_messages2[name] = {}
     end
 
-    table.insert(last_messages1[name], remove_duplicates(string.lower(message)) .. " ")
+    table.insert(last_messages2[name], remove_duplicates(string.lower(message)) .. " ")
 
     if #last_messages2[name] > 20 then
         table.remove(last_messages2[name], 1)
