@@ -1,9 +1,8 @@
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/functions.lua")
 
 local function gettime()
-    local current_time = os.date("*t")
-    local cdate = current_time.year .. "-" .. current_time.month .. "-" .. current_time.day
-    local ctime = current_time.hour .. ":" .. current_time.min .. ":" .. current_time.sec
+    local cdate = os.date("%Y-%m-%d")
+    local ctime = os.date("%H:%M:%S")
     return cdate .. " " .. ctime
 end
 
