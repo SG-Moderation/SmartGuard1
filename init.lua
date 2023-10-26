@@ -1,4 +1,5 @@
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/functions.lua")
+dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/gui.lua")
 
 local function gettime()
     local cdate = os.date("%Y-%m-%d")
