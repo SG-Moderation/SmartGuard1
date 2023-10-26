@@ -1,0 +1,1 @@
+BLACKLIST2 = {"shi ", "fu ", "f u "}

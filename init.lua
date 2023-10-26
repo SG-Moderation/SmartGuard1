@@ -21,12 +21,8 @@ for line in blfile:lines() do
 end
 blfile:close()
 
-local blacklist2 = {}
-local blfile2 = io.open(minetest.get_modpath(minetest.get_current_modname()) .. "/BLACKLIST2.txt")
-for line in blfile2:lines() do
-    table.insert(blacklist1, line)
-end
-blfile2:close()
+dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/BLACKLIST2.lua")
+local blacklist2 = BLACKLIST2
 
 
 minetest.register_on_chat_message(function(name, message)
