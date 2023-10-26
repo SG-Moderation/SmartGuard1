@@ -1,1 +1,5 @@
-BLACKLIST2 = {"shi ", "fu ", "f u "}
+BLACKLIST2 = {
+    "fu ",
+    "f u ",
+    "shi ",
+}
