@@ -31,13 +31,18 @@ minetest.register_on_chat_message(function(name, message)
         file = io.open(minetest.get_worldpath() .. "/AUTOMOD_LOGS.txt", "a")
         file:write(gettime() .. "   ", "Player " .. name .. " said " .. message .. "\n")
         file:close()
-
+        file = io.open(minetest.get_worldpath() .. "/AUTOMOD.txt", "a")
+        file:write(gettime() .. "   ", "Player " .. name .. " said " .. message .. "\n")
+        file:close()
     end
 end)
 
 minetest.register_on_chat_message(function(name, message)
     if automod.smartcontains2(message, name, blacklist2) then
         file = io.open(minetest.get_worldpath() .. "/AUTOMOD_LOGS.txt", "a")
+        file:write(gettime() .. "   ", "Player " .. name .. " said " .. message .. "\n")
+        file:close()
+        file = io.open(minetest.get_worldpath() .. "/AUTOMOD.txt", "a")
         file:write(gettime() .. "   ", "Player " .. name .. " said " .. message .. "\n")
         file:close()
     end
