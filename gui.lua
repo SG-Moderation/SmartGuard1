@@ -1,5 +1,10 @@
 sfinv.register_page("automod:gui", {
     title = "AutoMod",
+    is_in_nav = function(self, player, context)
+        local pname = player:get_player_name()
+        local has_privs = minetest.check_player_privs(pname, {kick=true})
+        return has_privs
+    end,
     get = function(self, player, context)
         local file = io.open(minetest.get_worldpath() .. "/AUTOMOD.txt")
         local content = ""
