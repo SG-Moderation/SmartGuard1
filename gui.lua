@@ -1,5 +1,7 @@
+--make inventory tab
 sfinv.register_page("automod:gui", {
     title = "AutoMod",
+    --only people with kick privs can see it
     is_in_nav = function(self, player, context)
         local pname = player:get_player_name()
         local has_privs = minetest.check_player_privs(pname, {kick=true})

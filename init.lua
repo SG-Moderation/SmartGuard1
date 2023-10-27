@@ -1,6 +1,9 @@
+--include the files
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/functions.lua")
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/gui.lua")
 
+
+--get time function
 local function gettime()
     local cdate = os.date("%Y-%m-%d")
     local ctime = os.date("%H:%M:%S")
@@ -26,6 +29,7 @@ dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/BLACKLIST2.lua"
 local blacklist2 = BLACKLIST2
 
 
+--register on chat message to check messages
 minetest.register_on_chat_message(function(name, message)
     if automod.smartcontains1(message, name, blacklist1) then
         file = io.open(minetest.get_worldpath() .. "/AUTOMOD_LOGS.txt", "a")

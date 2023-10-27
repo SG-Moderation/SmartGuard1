@@ -1,8 +1,10 @@
+--define
 automod = {}
 
 local last_messages1 = {}
 local last_messages2 = {}
 
+--function that removes duplicated characters
 local function remove_duplicates(s)
     local result = ""
     for i = 1, #s do
