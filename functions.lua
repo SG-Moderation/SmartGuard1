@@ -4,6 +4,7 @@ automod = {}
 local last_messages1 = {}
 local last_messages2 = {}
 
+
 --function that removes duplicated characters
 local function remove_duplicates(s)
     local result = ""
@@ -15,16 +16,25 @@ local function remove_duplicates(s)
     return result
 end
 
+--function that removes spaces
+local function remove_spaces(s)
+    local no_space = ""
+    no_space = s:gsub("%s+", "")
+    return no_space
+end
 
+
+--NON-SPACE-SENSITIVE DETECTION
 --messages by players will be logged into a table, with a table for each player.
---A SPACE **WON"T** BE ADDED AT THE END OF EACH MESSAGE.
+--A space **won't** be added at the end of each message.
 function automod.smartcontains1(message, name, blacklist)
 
     if not last_messages1[name] then
         last_messages1[name] = {}
     end
 
-    table.insert(last_messages1[name], remove_duplicates(string.lower(message)))
+    message = remove_spaces(remove_duplicates(string.lower(message)))
+    table.insert(last_messages1[name], message)
 
     if #last_messages1[name] > 20 then
         table.remove(last_messages1[name], 1)
@@ -39,8 +49,9 @@ function automod.smartcontains1(message, name, blacklist)
     end
 end
 
+--SPACE-SENSITIVE DETECTION
 --messages by players will be logged into a table, with a table for each player.
---A SPACE **WILL** BE ADDED AT THE END OF EACH MESSAGE.
+--A space **will** be added at the end of each message.
 function automod.smartcontains2(message, name, blacklist)
 
     if not last_messages2[name] then
