@@ -23,6 +23,13 @@ local function remove_spaces(s)
     return no_space
 end
 
+--function that removes certain special characters
+local function remove_sc(s)
+    local no_cs = ""
+    no_cs = s:gsub("[&~&`&^&(&)&_&-&+&=&{&}&|&:&;&'&<&,&>&.&?&/]", "")
+    return no_cs
+end
+
 
 --NON-SPACE-SENSITIVE DETECTION
 --messages by players will be logged into a table, with a table for each player.
@@ -33,7 +40,7 @@ function automod.smartcontains1(message, name, blacklist)
         last_messages1[name] = {}
     end
 
-    message = remove_spaces(remove_duplicates(string.lower(message)))
+    message = remove_duplicates(remove_sc(remove_spaces(string.lower(message))))
     table.insert(last_messages1[name], message)
 
     if #last_messages1[name] > 20 then
