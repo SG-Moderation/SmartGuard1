@@ -24,10 +24,10 @@ local function remove_spaces(s)
 end
 
 --function that removes certain special characters
-local function remove_sc(s)
-    local no_cs = ""
-    no_cs = s:gsub("[&~&`&^&(&)&_&-&+&=&{&}&|&:&;&'&<&,&>&.&?&/]", "")
-    return no_cs
+local function remove_all(s)
+    local all_removed = ""
+    all_removed = s:gsub("%W", "")
+    return all_removed
 end
 
 
@@ -40,8 +40,9 @@ function automod.smartcontains1(message, name, blacklist)
         last_messages1[name] = {}
     end
 
-    message = remove_duplicates(remove_sc(remove_spaces(string.lower(message))))
+    message = remove_duplicates(remove_all(string.lower(message)))
     table.insert(last_messages1[name], message)
+    minetest.chat_send_all(message)
 
     if #last_messages1[name] > 20 then
         table.remove(last_messages1[name], 1)
@@ -81,6 +82,10 @@ function automod.smartcontains2(message, name, blacklist)
 end
 
 
+--actual useful code ends here
+--------------------------------------------------------------------------------------------------
+
+
 -- if "word" is in the blacklist, then "blahwordblah" will still trigger this
 function automod.contains_word(target_message, blacklist)
     local blacklist_check = remove_duplicates(string.lower(target_message))
@@ -111,25 +116,25 @@ function automod.contains_word2(target_message, blacklist)
 end
 
 
--- messages that contain all caps and more than 5 characters will trigger this
---function automod.contains_caps(target_message)
-    --if target_message == string.upper(target_message)
-    --and string.len(target_message) > 5 then
-        --return true
-    --else
-        --return false
-    --end
---end
+--messages that contain all caps and more than 5 characters will trigger this
+function automod.contains_caps(target_message)
+    if target_message == string.upper(target_message)
+    and string.len(target_message) > 5 then
+        return true
+    else
+        return false
+    end
+end
 
--- messages without a space and contain 15 or more characters will trigger this
---function automod.contains_spam(target_message)
-    --if string.len(target_message) > 20
-    --and not string.find(target_message, ' ') then
-        --return true
-    --else
-        --return false
-    --end
---end
+--messages without a space and contain 15 or more characters will trigger this
+function automod.contains_spam(target_message)
+    if string.len(target_message) > 20
+    and not string.find(target_message, ' ') then
+        return true
+    else
+        return false
+    end
+end
 
 
 -- this censors the given message using the given blacklist
