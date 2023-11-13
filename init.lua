@@ -10,6 +10,15 @@ local function gettime()
     return cdate .. " " .. ctime
 end
 
+local function log_message(pname, pmessage)
+    file = io.open(minetest.get_worldpath() .. "/AUTOMOD_LOGS.txt", "a")
+    file:write(gettime() .. "   ", "Player " .. pname .. " said " .. pmessage .. "\n")
+    file:close()
+    file = io.open(minetest.get_worldpath() .. "/AUTOMOD_LOGS_TEMP.txt", "a")
+    file:write(gettime() .. "   ", "Player " .. pname .. " said " .. pmessage .. "\n")
+    file:close()
+end
+
 
 --[[
     remember that Lua’s string matching functions like string.find use patterns
@@ -32,23 +41,13 @@ local blacklist2 = BLACKLIST2
 --register on chat message to check messages
 minetest.register_on_chat_message(function(name, message)
     if automod.smartcontains1(message, name, blacklist1) then
-        file = io.open(minetest.get_worldpath() .. "/AUTOMOD_LOGS.txt", "a")
-        file:write(gettime() .. "   ", "Player " .. name .. " said " .. message .. "\n")
-        file:close()
-        file = io.open(minetest.get_worldpath() .. "/AUTOMOD.txt", "a")
-        file:write(gettime() .. "   ", "Player " .. name .. " said " .. message .. "\n")
-        file:close()
+        log_message(name, message)
     end
 end)
 
 minetest.register_on_chat_message(function(name, message)
     if automod.smartcontains2(message, name, blacklist2) then
-        file = io.open(minetest.get_worldpath() .. "/AUTOMOD_LOGS.txt", "a")
-        file:write(gettime() .. "   ", "Player " .. name .. " said " .. message .. "\n")
-        file:close()
-        file = io.open(minetest.get_worldpath() .. "/AUTOMOD.txt", "a")
-        file:write(gettime() .. "   ", "Player " .. name .. " said " .. message .. "\n")
-        file:close()
+        log_message(name, message)
     end
 end)
 

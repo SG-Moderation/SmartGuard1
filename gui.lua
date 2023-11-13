@@ -8,7 +8,7 @@ sfinv.register_page("automod:gui", {
         return has_privs
     end,
     get = function(self, player, context)
-        local file = io.open(minetest.get_worldpath() .. "/AUTOMOD.txt")
+        local file = io.open(minetest.get_worldpath() .. "/AUTOMOD_LOGS_TEMP.txt")
         local content = ""
         if file then
             content = file:read("*all")
@@ -23,7 +23,7 @@ sfinv.register_page("automod:gui", {
         if fields.refresh then
             sfinv.set_player_inventory_formspec(player)
         elseif fields.clear_field then
-            local file = io.open(minetest.get_worldpath() .. "/AUTOMOD.txt", "w")
+            local file = io.open(minetest.get_worldpath() .. "/AUTOMOD_LOGS_TEMP.txt", "w")
             if file then
                 file:write("")
                 file:close()
