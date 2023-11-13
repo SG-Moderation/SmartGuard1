@@ -23,10 +23,10 @@ local function remove_spaces(s)
     return no_space
 end
 
---function that removes certain special characters
+--function that only keeps letters
 local function remove_all(s)
     local all_removed = ""
-    all_removed = s:gsub("%W", "")
+    all_removed = s:gsub("[%W%d]", "")
     return all_removed
 end
 
