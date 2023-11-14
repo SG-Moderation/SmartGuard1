@@ -1,8 +1,17 @@
+------------------------------------------------------------------------------------------------------------------------
+
+
 --define
 automod = {}
 
-local last_messages1 = {}
-local last_messages2 = {}
+local last_messages_a1 = {}
+local last_messages_a2 = {}
+local last_messages_b1 = {}
+local last_messages_b2 = {}
+local last_messages_b3 = {}
+
+
+------------------------------------------------------------------------------------------------------------------------
 
 
 --function that removes duplicated characters
@@ -30,63 +39,152 @@ local function remove_all(s)
     return all_removed
 end
 
+--function that only keeps letters and spaces
+local function remove_parts(s)
+    local parts_removed = ""
+    parts_removed = s:gsub("[^%a%s]", "")
+    return parts_removed
+end
 
---NON-SPACE-SENSITIVE DETECTION
---messages by players will be logged into a table, with a table for each player.
---A space **won't** be added at the end of each message.
-function automod.smartcontains1(message, name, blacklist)
+--function that replaces special character with spaces
+local function replace_parts(s)
+    local parts_removed = ""
+    parts_removed = s:gsub("[%W%d_]", " ")
+    return parts_removed
+end
 
-    if not last_messages1[name] then
-        last_messages1[name] = {}
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+--removes all special characters, spaces, and duplicates so it is just pure plain text
+function automod.check_a1(message, name, blacklist)
+
+    if not last_messages_a1[name] then
+        last_messages_a1[name] = {}
     end
 
     message = remove_duplicates(remove_all(string.lower(message)))
-    table.insert(last_messages1[name], message)
-    minetest.chat_send_all(message)
+    table.insert(last_messages_a1[name], message)
+    minetest.chat_send_all("A1: " .. message)
 
-    if #last_messages1[name] > 20 then
-        table.remove(last_messages1[name], 1)
+    if #last_messages_a1[name] > 20 then
+        table.remove(last_messages_a1[name], 1)
     end
 
-    local last_messages_str1 = table.concat(last_messages1[name])
+    local last_messages_str_a1 = table.concat(last_messages_a1[name])
     for _, word in ipairs(blacklist) do
-        if string.find(last_messages_str1, word) then
-            last_messages1[name] = {}
+        if string.find(last_messages_str_a1, word) then
+            last_messages_a1[name] = {}
             return true
         end
     end
 end
 
---SPACE-SENSITIVE DETECTION
---messages by players will be logged into a table, with a table for each player.
---A space **will** be added at the end of each message.
-function automod.smartcontains2(message, name, blacklist)
+--removes all spaces and duplicates but keep special characters
+function automod.check_a2(message, name, blacklist)
 
-    if not last_messages2[name] then
-        last_messages2[name] = {}
+    if not last_messages_a2[name] then
+        last_messages_a2[name] = {}
     end
 
-    table.insert(last_messages2[name], remove_duplicates(string.lower(message)) .. " ")
+    message = remove_duplicates(remove_spaces(string.lower(message)))
+    table.insert(last_messages_a2[name], message)
+    minetest.chat_send_all("A2: " .. message)
 
-    if #last_messages2[name] > 20 then
-        table.remove(last_messages2[name], 1)
+    if #last_messages_a2[name] > 20 then
+        table.remove(last_messages_a2[name], 1)
     end
 
-    local last_messages_str2 = table.concat(last_messages2[name])
+    local last_messages_str_a2 = table.concat(last_messages_a2[name])
     for _, word in ipairs(blacklist) do
-        if string.find(last_messages_str2, word) then
-            last_messages2[name] = {}
+        if string.find(last_messages_str_a2, word) then
+            last_messages_a2[name] = {}
+            return true
+        end
+    end
+end
+
+--removes all special characters and duplicates but keep spaces
+--a space is added at the end of each message in the table
+function automod.check_b1(message, name, blacklist)
+
+    if not last_messages_b1[name] then
+        last_messages_b1[name] = {}
+    end
+
+    message = remove_duplicates(remove_parts(string.lower(message))) .. " "
+    table.insert(last_messages_b1[name], message)
+    minetest.chat_send_all("B1: " .. message)
+
+    if #last_messages_b1[name] > 20 then
+        table.remove(last_messages_b1[name], 1)
+    end
+
+    local last_messages_str_b1 = table.concat(last_messages_b1[name])
+    for _, word in ipairs(blacklist) do
+        if string.find(last_messages_str_b1, word) then
+            last_messages_b1[name] = {}
+            return true
+        end
+    end
+end
+
+--replace all special characters with spaces and remove duplicates
+--a space is added at the end of each message in the table
+function automod.check_b2(message, name, blacklist)
+
+    if not last_messages_b2[name] then
+        last_messages_b2[name] = {}
+    end
+
+    message = remove_duplicates(replace_parts(string.lower(message))) .. " "
+    table.insert(last_messages_b2[name], message)
+    minetest.chat_send_all("B2: " .. message)
+
+    if #last_messages_b2[name] > 20 then
+        table.remove(last_messages_b2[name], 1)
+    end
+
+    local last_messages_str_b2 = table.concat(last_messages_b2[name])
+    for _, word in ipairs(blacklist) do
+        if string.find(last_messages_str_b2, word) then
+            last_messages_b2[name] = {}
+            return true
+        end
+    end
+end
+
+--keep special characters and spaces but remove duplicates
+--a space is added at the end of each message in the table
+function automod.check_b3(message, name, blacklist)
+
+    if not last_messages_b3[name] then
+        last_messages_b3[name] = {}
+    end
+
+    message = remove_duplicates(string.lower(message)) .. " "
+    table.insert(last_messages_b3[name], message)
+    minetest.chat_send_all("B3: " .. message)
+
+    if #last_messages_b3[name] > 20 then
+        table.remove(last_messages_b3[name], 1)
+    end
+
+    local last_messages_str_b3 = table.concat(last_messages_b3[name])
+    for _, word in ipairs(blacklist) do
+        if string.find(last_messages_str_b3, word) then
+            last_messages_b3[name] = {}
             return true
         end
     end
 end
 
 
---actual useful code ends here
---------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 
 
--- if "word" is in the blacklist, then "blahwordblah" will still trigger this
+--if "word" is in the blacklist, then "blahwordblah" will still trigger this
 function automod.contains_word(target_message, blacklist)
     local blacklist_check = remove_duplicates(string.lower(target_message))
     for _, word in ipairs(blacklist) do
@@ -97,8 +195,8 @@ function automod.contains_word(target_message, blacklist)
     return false
 end
 
--- if "word" is in the blacklist, then "blah word blah" or "word" will trigger this
--- "blahwordblah" won't
+--if "word" is in the blacklist, then "blah word blah" or "word" will trigger this
+--"blahwordblah" won't
 function automod.contains_word2(target_message, blacklist)
     local blacklist_check = remove_duplicates(string.lower(target_message))
     local word_table = {}
@@ -137,7 +235,7 @@ function automod.contains_spam(target_message)
 end
 
 
--- this censors the given message using the given blacklist
+--this censors the given message using the given blacklist
 function automod.censor(message, blacklist)
     message = string.lower(remove_duplicates(message))
     for _, word in ipairs(blacklist) do
@@ -153,3 +251,6 @@ function automod.censor2(message, blacklist)
     end
     return message
 end
+
+
+------------------------------------------------------------------------------------------------------------------------

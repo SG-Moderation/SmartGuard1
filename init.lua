@@ -1,6 +1,12 @@
---include the files
+------------------------------------------------------------------------------------------------------------------------
+
+
+--execute the files
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/functions.lua")
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/gui.lua")
+
+
+------------------------------------------------------------------------------------------------------------------------
 
 
 --get time function
@@ -18,6 +24,9 @@ local function log_message(pname, pmessage)
     file:write(gettime() .. "   ", "Player " .. pname .. " said " .. pmessage .. "\n")
     file:close()
 end
+
+
+------------------------------------------------------------------------------------------------------------------------
 
 
 --[[
@@ -38,19 +47,38 @@ dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/BLACKLIST2.lua"
 local blacklist2 = BLACKLIST2
 
 
+------------------------------------------------------------------------------------------------------------------------
+
+
 --register on chat message to check messages
 minetest.register_on_chat_message(function(name, message)
-    if automod.smartcontains1(message, name, blacklist1) then
+    if automod.check_a1(message, name, blacklist1) then
         log_message(name, message)
     end
 end)
-
 minetest.register_on_chat_message(function(name, message)
-    if automod.smartcontains2(message, name, blacklist2) then
+    if automod.check_a2(message, name, blacklist1) then
+        log_message(name, message)
+    end
+end)
+minetest.register_on_chat_message(function(name, message)
+    if automod.check_b1(message, name, blacklist2) then
+        log_message(name, message)
+    end
+end)
+minetest.register_on_chat_message(function(name, message)
+    if automod.check_b2(message, name, blacklist2) then
+        log_message(name, message)
+    end
+end)
+minetest.register_on_chat_message(function(name, message)
+    if automod.check_b3(message, name, blacklist2) then
         log_message(name, message)
     end
 end)
 
+
+------------------------------------------------------------------------------------------------------------------------
 
 
 --minetest.register_on_chat_message(function(name, message)
@@ -76,3 +104,6 @@ end)
         --minetest.chat_send_all("Swearing detected.")
     --end
 --end)
+
+
+------------------------------------------------------------------------------------------------------------------------
