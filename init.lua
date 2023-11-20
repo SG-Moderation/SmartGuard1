@@ -54,25 +54,13 @@ local blacklist2 = BLACKLIST2
 minetest.register_on_chat_message(function(name, message)
     if automod.check_a1(message, name, blacklist1) then
         log_message(name, message)
-    end
-end)
-minetest.register_on_chat_message(function(name, message)
-    if automod.check_a2(message, name, blacklist1) then
+    elseif automod.check_a2(message, name, blacklist1) then
         log_message(name, message)
-    end
-end)
-minetest.register_on_chat_message(function(name, message)
-    if automod.check_b1(message, name, blacklist2) then
+    elseif automod.check_b1(message, name, blacklist2) then
         log_message(name, message)
-    end
-end)
-minetest.register_on_chat_message(function(name, message)
-    if automod.check_b2(message, name, blacklist2) then
+    elseif automod.check_b2(message, name, blacklist2) then
         log_message(name, message)
-    end
-end)
-minetest.register_on_chat_message(function(name, message)
-    if automod.check_b3(message, name, blacklist2) then
+    elseif automod.check_b3(message, name, blacklist2) then
         log_message(name, message)
     end
 end)
