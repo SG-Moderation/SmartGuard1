@@ -6,8 +6,13 @@ BLACKLIST2 = {
     "fu ",
     "f u ",
     "shi ",
+    "s h i ",
     "dic ",
+    "d i c ",
     "ass ",
+    "a s s",
     "nig ",
+    "n i g",
     "sx ",
+    "s x "
 }
