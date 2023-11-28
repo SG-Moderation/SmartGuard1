@@ -57,14 +57,15 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 
 
---removes all special characters, spaces, and duplicates so it is just pure plain text
+--removes all special characters, spaces so it is just pure plain text
+--first if tests with duplicates, second if without
 function automod.check_a1(message, name, blacklist)
 
     if not last_messages_a1[name] then
         last_messages_a1[name] = {}
     end
 
-    message = remove_duplicates(remove_all(string.lower(message)))
+    message = remove_all(string.lower(message))
     table.insert(last_messages_a1[name], message)
     minetest.chat_send_all("A1: " .. message)
 
@@ -77,18 +78,22 @@ function automod.check_a1(message, name, blacklist)
         if string.find(last_messages_str_a1, word) then
             last_messages_a1[name] = {}
             return true
+        elseif string.find(remove_duplicates(last_messages_str_a1), word) then
+            last_messages_a1[name] = {}
+            return true
         end
     end
 end
 
---removes all spaces and duplicates but keep special characters
+--removes all spaces but keep special characters
+--first if tests with duplicates, second if without
 function automod.check_a2(message, name, blacklist)
 
     if not last_messages_a2[name] then
         last_messages_a2[name] = {}
     end
 
-    message = remove_duplicates(remove_spaces(string.lower(message)))
+    message = remove_spaces(string.lower(message))
     table.insert(last_messages_a2[name], message)
     minetest.chat_send_all("A2: " .. message)
 
@@ -101,19 +106,23 @@ function automod.check_a2(message, name, blacklist)
         if string.find(last_messages_str_a2, word) then
             last_messages_a2[name] = {}
             return true
+        elseif string.find(remove_duplicates(last_messages_str_a2), word) then
+            last_messages_a2[name] = {}
+            return true
         end
     end
 end
 
---removes all special characters and duplicates but keep spaces
+--removes all special characters but keep spaces
 --a space is added at the end of each message in the table
+--first if tests with duplicates, second if without
 function automod.check_b1(message, name, blacklist)
 
     if not last_messages_b1[name] then
         last_messages_b1[name] = {}
     end
 
-    message = remove_duplicates(remove_parts(string.lower(message))) .. " "
+    message = remove_parts(string.lower(message)) .. " "
     table.insert(last_messages_b1[name], message)
     minetest.chat_send_all("B1: " .. message)
 
@@ -126,19 +135,23 @@ function automod.check_b1(message, name, blacklist)
         if string.find(last_messages_str_b1, word) then
             last_messages_b1[name] = {}
             return true
+        elseif string.find(remove_duplicates(last_messages_str_b1), word) then
+            last_messages_b1[name] = {}
+            return true
         end
     end
 end
 
---replace all special characters with spaces and remove duplicates
+--replace all special characters with spaces
 --a space is added at the end of each message in the table
+--first if tests with duplicates, second if without
 function automod.check_b2(message, name, blacklist)
 
     if not last_messages_b2[name] then
         last_messages_b2[name] = {}
     end
 
-    message = remove_duplicates(replace_parts(string.lower(message))) .. " "
+    message = replace_parts(string.lower(message)) .. " "
     table.insert(last_messages_b2[name], message)
     minetest.chat_send_all("B2: " .. message)
 
@@ -149,6 +162,9 @@ function automod.check_b2(message, name, blacklist)
     local last_messages_str_b2 = table.concat(last_messages_b2[name])
     for _, word in ipairs(blacklist) do
         if string.find(last_messages_str_b2, word) then
+            last_messages_b2[name] = {}
+            return true
+        elseif string.find(remove_duplicates(last_messages_str_b2), word) then
             last_messages_b2[name] = {}
             return true
         end
