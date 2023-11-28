@@ -40,8 +40,8 @@ kcuf
 fual
 shit
 %$hit
-sh!t
-%$h!t
+sh%!t
+%$h%!t
 sht
 shxt
 sh%*t
@@ -112,6 +112,7 @@ dick
 d%*ck
 dxck
 d%!ck
+d1ck
 nigga
 nigra
 nigger
@@ -159,7 +160,8 @@ ballkick
 ballsack
 ballsuck
 beotch
-nuts`
+nuts
+nut
 cum
 cume
 c%*m
@@ -200,12 +202,16 @@ communist
 trump
 biden
 hitler
+h1tler
+h%!tler
 democrate
 republican
 capitalism
 putin
 blm
 lgbtq
+lgbt
+putin
 kkk
 69
 卐

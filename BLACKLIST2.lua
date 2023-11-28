@@ -12,7 +12,9 @@ BLACKLIST2 = {
     "ass ",
     "a s s",
     "nig ",
-    "n i g",
+    "n i g ",
+    "nigs ",
+    "n i g s ",
     "sx ",
     "s x "
 }
