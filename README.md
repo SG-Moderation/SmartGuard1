@@ -1,1 +1,1 @@
-# Minetest Automod
+# SmartGuard Mod for Minetest
